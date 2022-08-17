@@ -161,11 +161,7 @@
         $(document).ready(function () {
             $('.post_like').click(function () {
                 $slug = $(this).data('slug');
-                // select a < li < span
                 $span = $(this).parent().parent().find('span');
-                $like1 =   
-                $like = $('.like_count');
-                // increase like count
                 $.ajax({
                     url: '{{ route('post.like') }}',
                     type: 'POST',
