@@ -161,7 +161,10 @@
         $(document).ready(function () {
             $('.post_like').click(function () {
                 $slug = $(this).data('slug');
-                $like = $(this).next('li a').find('.likes_count');
+                // select a < li < span
+                $span = $(this).parent().parent().find('span');
+                $like1 =   
+                $like = $('.like_count');
                 // increase like count
                 $.ajax({
                     url: '{{ route('post.like') }}',
@@ -171,7 +174,8 @@
                         _token: '{{ csrf_token() }}'
                     },
                     success: function (data) {
-                        $like.text(data.likes_count + ' Likes');
+                        $span.text(data.likes_count + ' Likes');
+
                     }
                 });
             });
