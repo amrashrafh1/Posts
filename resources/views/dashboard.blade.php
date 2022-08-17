@@ -161,7 +161,7 @@
         $(document).ready(function () {
             $('.post_like').click(function () {
                 $slug = $(this).data('slug');
-                $this = $(this);
+                $like = $(this).next('li a').find('.likes_count');
                 // increase like count
                 $.ajax({
                     url: '{{ route('post.like') }}',
@@ -171,8 +171,7 @@
                         _token: '{{ csrf_token() }}'
                     },
                     success: function (data) {
-                        console.log(data.likes_count);
-                        $this.find('.likes_count').text(data.likes);
+                        $like.text(data.likes_count + ' Likes');
                     }
                 });
             });
