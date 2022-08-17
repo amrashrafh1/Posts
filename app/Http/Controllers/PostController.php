@@ -19,7 +19,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::latest()->paginate(10);
+        $posts = auth()->user()->posts()->latest()->paginate(10);
 
         return view('post.index', compact('posts'))
             ->with('i', (request()->input('page', 1) - 1) * $posts->perPage());
@@ -63,7 +63,7 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $post = Post::findOrFail($id);
+        $post = auth()->user()->posts()->findOrFail($id);
 
         return view('post.show', compact('post'));
     }
@@ -76,7 +76,7 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        $post = Post::findOrFail($id);
+        $post = auth()->user()->posts()->findOrFail($id);
 
         return view('post.edit', compact('post'));
     }
@@ -90,7 +90,7 @@ class PostController extends Controller
      */
     public function update(PostRequest $request, Post $post)
     {
-
+        $post = auth()->user()->posts()->findOrFail($post->id);
         $post->update($request->validated());
         if($request->has('post_cover')) {
             $post->clearMediaCollection('post_cover');
@@ -107,23 +107,10 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        $post = Post::findOrFail($id)->delete();
+        $post = auth()->user()->posts()->findOrFail($id)->delete();
 
         return redirect()->route('posts.index')
             ->with('success', 'Post deleted successfully');
     }
 
-
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function news_show($slug)
-    {
-        $post = Post::where('slug', $slug)->first();
-
-        return view('news.show', compact('post'));
-    }
 }

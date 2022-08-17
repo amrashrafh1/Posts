@@ -35,7 +35,7 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'address' => ['sometimes|nullable', 'string', 'max:255'],
+            'address' => ['sometimes', 'string', 'max:255'],
             'avatar' => ['required','image','mimes:jpeg,png,jpg,gif,svg','max:2048'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
@@ -45,7 +45,7 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'address' => $request->address,
-            'avatar' => upload_cover($request->avatar, 'avatars'),
+            'avatar' => $request->file('avatar'),
             'password' => Hash::make($request->password),
         ]);
 

@@ -22,7 +22,9 @@
             </ul>
 
             <!-- Right Side Of Navbar -->
-            <ul class="navbar-nav ms-auto">
+            <ul class="navbar-nav ms-auto" style="    display: block;
+            float: right;
+            margin-left: auto;">
                 <!-- Authentication Links -->
                 @guest
                 @if (Route::has('login'))
@@ -37,18 +39,17 @@
                 </li>
                 @endif
                 @else
-                <li class="d-block float-right">
+                <li>
                     <a>
                         Hi, {{ Auth::user()->name }}
                     </a>
-                    <br/>
+                    <br />
                     <form method="POST" class="d-block" action="{{ route('logout') }}">
                         @csrf
-                        <x-responsive-nav-link :href="route('logout')"
-                        onclick="event.preventDefault();
+                        <x-responsive-nav-link :href="route('logout')" onclick="event.preventDefault();
                                           this.closest('form').submit();">
-                          <i data-cs-icon="logout" class="me-2" data-cs-size="17"></i>
-                          <span class="align-middle">Logout</span>
+                            <i data-cs-icon="logout" class="me-2" data-cs-size="17"></i>
+                            <span class="align-middle">Logout</span>
                         </x-responsive-nav-link>
                     </form>
                 </li>

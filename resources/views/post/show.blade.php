@@ -49,6 +49,14 @@
                             {{ $post->slug }}
                         </div>
                         <div class="form-group">
+                            <strong>Status:</strong>
+                            {{ $post->status ? 'Show' : 'Hide' }}
+                        </div>
+                        <div class="form-group">
+                            <strong>Publish at:</strong>
+                            {{ $post->publish_at ? \Carbon\Carbon::parse($post->publish_at)->format('d-m-Y H:i') : '' }}
+                        </div>
+                        <div class="form-group">
                             <strong>Created at:</strong>
                             {{ Carbon\Carbon::parse($post->created_at)->toDateTimeString() }}
                         </div>

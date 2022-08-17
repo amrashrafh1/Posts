@@ -23,11 +23,16 @@ class PostRequest extends FormRequest
      */
     public function rules()
     {
+        if(request()->isMethod('patch')) {
+            $cover = 'sometimes|nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240';
+        } else {
+            $cover = 'required|image|mimes:jpeg,png,jpg,gif,svg|max:10240';
+        }
         return [
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'slug' => 'sometimes|nullable|string',
-            'cover' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
+            'cover' => $cover,
             'files' => 'sometimes|nullable|array',
             'status' => 'required',
             'publish_at' => 'required',

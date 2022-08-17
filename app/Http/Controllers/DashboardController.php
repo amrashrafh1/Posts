@@ -14,7 +14,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $posts = Post::latest()->paginate(10);
+        $posts = Post::where('status', 1)->where('publish_at', '<=', now())->latest()->paginate(10);
 
         return view('dashboard', compact('posts'))
             ->with('i', (request()->input('page', 1) - 1) * $posts->perPage());
@@ -46,10 +46,13 @@ class DashboardController extends Controller
             'slug' => 'required|exists:posts,slug',
         ]);
         $post = Post::where('slug', $request->slug)->firstOrFail();
-        
-        $post->likes()->create([
-            'user_id' => auth()->id(),
-        ]);
-        return response()->json(['success' => 'You have successfully liked this post.']);
+        if($post->likes()->where('user_id',auth()->user()->id)->exists()){
+            $post->likes()->where('user_id',auth()->user()->id)->delete();
+        } else {
+            $post->likes()->create([
+                'user_id' => auth()->id(),
+            ]);
+        }
+        return response()->json(['likes_count' => $post->likes->count() ]);
     }
 }

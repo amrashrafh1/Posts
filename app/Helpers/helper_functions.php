@@ -38,6 +38,7 @@ if(! function_exists('upload_cover')) {
     function upload_cover($file, $path)
     {
         $file_name =  time();
+        
         Storage::disk('public')->putFileAs($path, $file, $file_name);
         return $path . '/' . $file_name;
     }

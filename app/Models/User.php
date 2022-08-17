@@ -21,6 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'address',
+        'avatar',
     ];
 
     /**
@@ -50,6 +52,12 @@ class User extends Authenticatable
     public function likes()
     {
         return $this->morphMany(Like::class, 'likeable');
+    }
+
+    // posts that the user has created
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
     }
 
 }

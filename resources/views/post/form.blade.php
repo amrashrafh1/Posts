@@ -12,7 +12,7 @@
         </div>
         @if($post->cover)
             <div class="form-group mb-3">
-                <img src="{{ asset($post->cover) }}" alt="{{ $post->title }}" class="img-fluid">
+                <img src="{{ Storage::url($post->cover) }}" alt="{{ $post->title }}" class="img-fluid">
             </div>
         @endif
         <div class="mb-3 position-relative form-group">
